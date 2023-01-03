@@ -206,4 +206,4 @@ SELECT * FROM items --> CONFIRMED, ITEMS TABLE IS IN 3NF.
 -----------------------------------
 -----------------------------------
 
--- SOURCE OF PROJECT: https://www.superdatascience.com/home -- Kirill Eremenko
+-- SOURCE OF PROJECT: https://www.superdatascience.com/ -- Kirill Eremenko
