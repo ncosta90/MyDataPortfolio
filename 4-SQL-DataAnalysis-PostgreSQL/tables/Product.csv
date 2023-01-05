@@ -1,0 +1,95 @@
+ProductID,ProductName,CategoryID,Price
+1,Large Towel,1,9
+2,Hand Towel,1,5
+3,Washcloth,1,3
+4,Shampoo,1,40
+5,Moisturizer,1,40
+6,Conditioner,1,40
+7,Hand Soap,1,35
+8,Bath Soap,1,35
+9,Tissues,1,14
+10,Toilet Paper,1,19
+11,Shower Cap,1,10
+12,Bed Sheet (King),1,29
+13,Bed Sheet (Double),1,20
+14,Pillowcase,1,15
+15,Drinking Glass,1,24
+16,Mouthwash,1,40
+17,Clothes Hanger,1,18
+18,Coffee Cup,1,24
+19,Light Bulb,1,17
+20,Pens,2,30
+21,Printer Paper,2,50
+22,Paper Clips,2,3
+23,Printer Toner,2,85
+24,Envelopes (Letter),2,24
+25,Envelopes (Legal),2,28
+26,Envelopes (Catalog),2,13
+27,Invisible Tape,2,8
+28,Staples,2,8
+29,Erasable Markers,2,6
+30,Permanent Markers,2,6
+31,Sticky Notes,2,20
+32,Note Pads,2,14
+33,Towel Rack,3,10
+34,Shower Curtain,3,5
+35,Tissue Box,3,25
+36,Armoire,3,115
+37,Bed (King),3,300
+38,Bed (Double),3,250
+39,Alarm Clock,3,45
+40,Coffee Maker,3,119
+41,Office Chair,3,85
+42,Reading Chair,3,70
+43,Table Lamp,3,38
+44,Floor Lamp,3,55
+45,Computer Desk,3,102
+46,Safe,3,115
+47,Swivel Chair,3,75
+48,Side Table,3,40
+49,Large Vase,3,27
+50,Small Vase,3,33
+51,Painting,3,85
+52,Ironing Board,3,18
+53,Iron,3,20
+54,Chest of Drawers,3,150
+55,Television,3,200
+56,Telephone,3,38
+57,Wireless Router,3,70
+58,Mirror,3,85
+59,Screws,4,14
+60,Portable Drill,4,195
+61,Tape Measure,4,8
+62,Leaf Blower,4,202
+63,Duct Tape,4,27
+64,Gaffer's Tape,4,27
+65,Ladder,4,89
+66,Wood Glue,4,21
+67,Adjustable Wrench,4,10
+68,Window Screen,4,30
+69,Door Knob,4,41
+70,Door Lock,4,117
+71,Hammer,4,17
+72,Nails,4,12
+73,Mop,4,15
+74,Large Plant,5,35
+75,Small Plant,5,25
+76,Ficus,5,80
+77,Large Area Rug,5,40
+78,Small Area Rug,5,20
+79,Coffee Table,5,103
+80,Poster Stand,5,27
+81,Flyer Holder,5,3
+82,Business Cards,5,60
+83,Bar Stool,5,60
+84,Tall Chair,5,75
+85,Low Chair,5,80
+86,Sofa,5,215
+87,End Table,5,30
+88,Serving Tray,5,6
+89,Photograph,5,45
+90,Luggage Cart,5,138
+91,Small Sign,5,14
+92,Large Sign,5,20
+93,Terminal,5,85
+94,Monitor,5,70
