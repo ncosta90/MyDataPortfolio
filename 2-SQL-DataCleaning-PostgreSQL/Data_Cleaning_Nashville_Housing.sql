@@ -1,0 +1,129 @@
+-- TABLE CREATION
+
+CREATE TABLE NASHVILLE (
+	UniqueID varchar,
+	ParcelID varchar,
+	LandUse varchar, 
+	PropertyAddress varchar,
+	SaleDate varchar, 
+	SalePrice varchar,
+	LegalReference  varchar,
+	SoldAsVacant varchar,
+	OwnerName varchar,
+	OwnerAddress varchar,
+	Acreage varchar,
+	TaxDistrict varchar,
+	LandValue varchar,
+	BuildingValue varchar,
+	TotalValue varchar,
+	YearBuilt varchar,
+	Bedrooms varchar,
+	FullBath varchar,
+	HalfBath varchar
+)
+
+-- COPYING DATA
+
+TRUNCATE TABLE nombre_de_la_tabla;
+
+COPY NASHVILLE FROM '/Users/Shared/Nashville Housing Data for Data Cleaning.csv' DELIMITER ',' CSV HEADER;
+
+-- CHECKING WE HAVE ALL DATA IN THE TABLE
+
+SELECT * 
+FROM NASHVILLE -- 56477 RECORDS
+
+-- STANDARDIZE DATE FORMAT
+
+SELECT saledate, TO_DATE('April 9, 2013', 'Month DD, YYYY') AS converted_date 
+FROM NASHVILLE
+
+UPDATE NASHVILLE 
+SET saledate = TO_DATE(saledate, 'Month DD, YYYY');
+
+SELECT saledate 
+FROM NASHVILLE
+
+-- POPULATE PROPERTY ADDRESS DATA
+
+SELECT * 
+FROM NASHVILLE
+WHERE PropertyAddress IS NULL -- WE HAVE 29 PROPERTY WITHOUT ADDRESS
+
+-- I REALIZE SOME PROPERTIES HAVE THE SAME PARCEL ID AND WHAT IT HAPPENS THE PROPERTY ADDRESS IS THE SAME.
+
+SELECT * 
+FROM NASHVILLE
+WHERE PARCELID = '110 03 0A 061.00'
+
+-- I WILL TRY TO FIND THE MISSING PROPERTY ADDRESSES USING THE PARCEL ID.
+
+DROP TABLE IF EXISTS TEMP_PARCELID_PROPERTYADDRESS;
+CREATE TEMP TABLE TEMP_PARCELID_PROPERTYADDRESS AS
+SELECT DISTINCT ParcelID, PropertyAddress
+FROM NASHVILLE
+WHERE PropertyAddress IS NOT null
+
+SELECT * FROM TEMP_PARCELID_PROPERTYADDRESS
+
+UPDATE NASHVILLE AS N
+SET PropertyAddress = TN.PropertyAddress
+FROM TEMP_PARCELID_PROPERTYADDRESS AS TN
+WHERE N.PropertyAddress IS NULL
+AND N.ParcelID = TN.ParcelID;
+
+SELECT * 
+FROM NASHVILLE
+WHERE PropertyAddress IS NULL -- OK!, NO NULL VALUES.
+
+DROP TABLE TEMP_PARCELID_PROPERTYADDRESS;
+
+-- BREAKING OUT PROPERTYADDRESS INTO INDIVIDUAL COLUMNS (ADDRESS & City)
+
+SELECT PropertyAddress, SPLIT_PART(PropertyAddress, ', ', 1) AS Address , SPLIT_PART(PropertyAddress, ', ', 2) AS City
+FROM NASHVILLE
+
+ALTER TABLE NASHVILLE
+ADD PropertySplitAddress varchar,
+ADD PropertySplitCity varchar
+
+UPDATE NASHVILLE
+SET PropertySplitAddress = SPLIT_PART(PropertyAddress, ', ', 1)
+
+UPDATE NASHVILLE
+SET PropertySplitCity = SPLIT_PART(PropertyAddress, ', ', 2)
+
+-- CHANGE Y AND N TO YES AND NO IN "SOLD AS VACANT" FIELD
+
+SELECT SoldAsVacant
+, CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
+	   WHEN SoldAsVacant = 'N' THEN 'No'
+	   ELSE SoldAsVacant
+	   END
+FROM NASHVILLE
+
+UPDATE NASHVILLE
+SET SoldAsVacant = (CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
+	   WHEN SoldAsVacant = 'N' THEN 'No'
+	   ELSE SoldAsVacant
+	   END)
+
+-- REMOVE DUPLICATES
+
+DROP TABLE IF EXISTS TEMP_NASHVILLE;
+CREATE TEMP TABLE TEMP_NASHVILLE AS
+SELECT DISTINCT ON (PARCELID, PROPERTYADDRESS, SALEDATE, SALEPRICE, LEGALREFERENCE ) *
+FROM NASHVILLE
+
+DELETE FROM NASHVILLE;
+
+INSERT INTO NASHVILLE
+SELECT *
+FROM TEMP_NASHVILLE;
+
+DROP TABLE TEMP_NASHVILLE;
+
+-----------------------------------
+-----------------------------------
+
+-- SOURCE OF PROJECT: https://youtu.be/8rO7ztF4NtU -- Alex The Analyst
